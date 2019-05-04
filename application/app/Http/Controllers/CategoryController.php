@@ -22,6 +22,7 @@ class CategoryController extends Controller
     public function index()
     {   
         $data['categoryLists'] = Category::paginate(10);
+        
         return view('category.list', $data);
     }
 
@@ -51,6 +52,7 @@ class CategoryController extends Controller
         $table->category_name = $request->category_name;
         $table->save();
         $request->session()->flash('message', 'Category has been created!');
+
         return redirect()->back();
     }
 
@@ -74,6 +76,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $data['editCat'] = Category::find($id);
+
         return view('category.create', $data);
     }
 
@@ -86,10 +89,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $table = Category::find($id);
+        $table                = Category::find($id);
         $table->category_name = $request->category_name;
         $table->save();
         $request->session()->flash('message', '<span class="alert alert-warning col-md-8">Category has been updated!</span>');
+       
         return redirect()->route('category.index');
     }
 
@@ -102,6 +106,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
+
         return redirect()->back()->with('message', '<span class="alert alert-danger col-md-8">Category has been deleted!</span>');
     }
 }
